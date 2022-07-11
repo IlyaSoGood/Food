@@ -4,11 +4,27 @@
 .hide {
     display: none;
 }
-.fade {
-    animation-name: fade;
+.fadeIn {
+    animation-name: fadeIn;
     animation-duration: 1.5s;
 }
-@keyframes fade{
+
+.fadeInModal {
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+}
+
+.fadeOutModal {
+    animation-name: fadeOut;
+    animation-duration: 0.5s;
+}
+
+@keyframes fadeIn{
     from{opacity: 0.1;} to
     {opacity: 1;}
+}
+
+@keyframes fadeOut{
+    from{opacity: 1;} to
+    {opacity: 0.1;}
 }
