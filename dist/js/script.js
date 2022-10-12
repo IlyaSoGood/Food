@@ -190,8 +190,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   setClock('.timer', deadline); // Modal
 
+<<<<<<< HEAD
   const modalTrigger = document.querySelectorAll('[data-modal]'); // const modalCloseBtn = document.querySelectorAll('[data-close]');
 
+=======
+  const modalTrigger = document.querySelectorAll('[data-modal]');
+  const modalCloseBtn = document.querySelectorAll('[data-close]');
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
   const modal = document.querySelector('.modal');
 
   function openModal() {
@@ -208,6 +213,7 @@ window.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('hide');
     modal.classList.remove('show');
     document.body.style.overflow = '';
+<<<<<<< HEAD
   } // modalCloseBtn.forEach(item => {
   //     item.addEventListener('click', closeModal);
   // });
@@ -215,6 +221,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   modal.addEventListener('click', e => {
     if (e.target === modal || e.target.getAttribute('data-close') == '') {
+=======
+  }
+
+  modalCloseBtn.forEach(item => {
+    item.addEventListener('click', closeModal);
+  });
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
       closeModal();
     }
   });
@@ -222,8 +237,12 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.code === 'Escape' && modal.classList.contains('show')) {
       closeModal();
     }
+<<<<<<< HEAD
   });
   const modalTimerId = setTimeout(openModal, 50000);
+=======
+  }); // const modalTimerId = setTimeout(openModal, 5000);
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
 
   function showModalByScroll() {
     if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -281,7 +300,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const forms = document.querySelectorAll('form');
   const message = {
+<<<<<<< HEAD
     loading: 'img/form/spinner.svg',
+=======
+    loading: 'Идет загрузка',
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
     success: 'Спасибо, скоро мы с Вами свяжемся',
     failure: 'Что-то пошло не так...'
   };
@@ -292,6 +315,7 @@ window.addEventListener('DOMContentLoaded', () => {
   function postData(form) {
     form.addEventListener('submit', e => {
       e.preventDefault();
+<<<<<<< HEAD
       const statusMessage = document.createElement('img');
       statusMessage.src = message.loading;
       statusMessage.style.cssText = `
@@ -317,10 +341,28 @@ window.addEventListener('DOMContentLoaded', () => {
           statusMessage.remove();
         } else {
           showModalDialog(message.failure);
+=======
+      const statusMessage = document.createElement('div');
+      statusMessage.classList.add('status');
+      statusMessage.textContent = message.loading;
+      form.append(statusMessage);
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+      request.setRequestHeader('Content-type', 'multipart/form-data');
+      const formData = new FormData(form);
+      request.send(formData);
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
+          console.log(request.response);
+          statusMessage.textContent = message.success;
+        } else {
+          statusMessage.textContent = message.failure;
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
         }
       });
     });
   }
+<<<<<<< HEAD
 
   function showModalDialog(message) {
     const prevMovalDialog = document.querySelector('.modal__dialog');
@@ -352,6 +394,8 @@ window.addEventListener('DOMContentLoaded', () => {
       'Content-type': 'application/json'
     }
   }).then(response => response.json()).then(json => console.log(json));
+=======
+>>>>>>> c8d42e30aa802ff6323ae4de5368d9ea04442aeb
 });
 
 /***/ })
