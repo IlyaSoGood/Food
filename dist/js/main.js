@@ -201,6 +201,7 @@ window.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     };
 
+    //1-ый Способ через конструктор(шаблон)
     // getResource ('http://localhost:3000/menu')
     //     .then(data => {
     //         data.forEach(({img, altimg, title, descr, price}) => {
@@ -208,29 +209,38 @@ window.addEventListener('DOMContentLoaded', () => {
     //         });
     //     });
 
-    getResource ('http://localhost:3000/menu')
-        .then(data => createCard(data));
+    //2-ой способ создания карточек товара через функцию, но лишаемся ШАБЛОНИЗАЦИИ. Чтобы построить что-то один раз.
+    // getResource ('http://localhost:3000/menu')
+    //     .then(data => createCard(data));
 
-    function createCard(data) {
-        data.forEach(({img, altimg, title, descr, price}) => {
-            const element = document.createElement('div');
+    // function createCard(data) {
+    //     data.forEach(({img, altimg, title, descr, price}) => {
+    //         const element = document.createElement('div');
 
-            element.classList.add('menu__item');
+    //         element.classList.add('menu__item');
 
-            element.innerHTML = `
-                <img src=${img} alt=${altimg}>
-                <h3 class="menu__item-subtitle">${title}</h3>
-                <div class="menu__item-descr">${descr}</div>
-                <div class="menu__item-divider"></div>
-                <div class="menu__item-price">
-                    <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${price}</span> грн/день</div>
-                </div>
-            `;
+    //         element.innerHTML = `
+    //             <img src=${img} alt=${altimg}>
+    //             <h3 class="menu__item-subtitle">${title}</h3>
+    //             <div class="menu__item-descr">${descr}</div>
+    //             <div class="menu__item-divider"></div>
+    //             <div class="menu__item-price">
+    //                 <div class="menu__item-cost">Цена:</div>
+    //                 <div class="menu__item-total"><span>${price}</span> грн/день</div>
+    //             </div>
+    //         `;
 
-            document.querySelector('.menu .container').append(element);
+    //         document.querySelector('.menu .container').append(element);
+    //     });
+    // }
+
+    //3 Использование библиотеки Axios
+    axios.get('http://localhost:3000/menu')
+        .then(data => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {
+                new ProductCard(img, altimg, title, descr, price, '.menu .container').render();
+            });
         });
-    }
 
     // Forms
     const forms = document.querySelectorAll('form');
