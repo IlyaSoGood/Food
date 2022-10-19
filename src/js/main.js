@@ -242,7 +242,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-    // Forms
+    // Forms. Delivery data to server and from server
     const forms = document.querySelectorAll('form');
 
     const message = {
@@ -317,59 +317,62 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    //Создание слайдера для блока Offer
-    const buttonOfferPrev = document.querySelector('.offer__slider-prev'),
+    //Slider
+        const buttonOfferPrev = document.querySelector('.offer__slider-prev'),
           buttonOfferNext = document.querySelector('.offer__slider-next'),
           offerSlidesCollection = document.querySelectorAll('.offer__slide'),
-        //   offerImgsCollection = document.querySelectorAll('.offer__slide img'),
           offerCurrentSlide = document.getElementById('current'),
           offerTotalSlide = document.getElementById('total');
     let idSlide = 0;
 
-    (() => {
-        if (offerSlidesCollection.length > 10) {
-            offerTotalSlide.textContent = `${offerSlidesCollection.length}`;
-        } else {
-            offerTotalSlide.textContent = `0${offerSlidesCollection.length}`;
-        }
-    })();
+    //Создание простого слайдера для блока Offer
+    // (() => {
+    //     if (offerSlidesCollection.length > 10) {
+    //         offerTotalSlide.textContent = `${offerSlidesCollection.length}`;
+    //     } else {
+    //         offerTotalSlide.textContent = `0${offerSlidesCollection.length}`;
+    //     }
+    // })();
     
-    function hideOfferSlides (i = 0) {
-        if (i > 8) {
-            offerCurrentSlide.textContent = `${i + 1}`;
-        } else {
-            offerCurrentSlide.textContent = `0${i + 1}`;
-        }
-        offerSlidesCollection.forEach((item, j) => {
-            if (j !== i) {
-                item.classList.add('hide');
-                item.classList.remove('show', 'fadeIn');
-            }
-        });
-    }
-    hideOfferSlides();
+    // function hideOfferSlides (i = 0) {
+    //     if (i > 8) {
+    //         offerCurrentSlide.textContent = `${i + 1}`;
+    //     } else {
+    //         offerCurrentSlide.textContent = `0${i + 1}`;
+    //     }
+    //     offerSlidesCollection.forEach((item, j) => {
+    //         if (j !== i) {
+    //             item.classList.add('hide');
+    //             item.classList.remove('show', 'fadeIn');
+    //         }
+    //     });
+    // }
+    // hideOfferSlides();
 
-    function showOfferSlide (i) {
-        offerSlidesCollection[i].classList.add('show', 'fadeIn');
-        offerSlidesCollection[i].classList.remove('hide');
-        hideOfferSlides(i);
-    }
-    buttonOfferNext.addEventListener('click', () => {
-        idSlide ++;
-        if (idSlide == offerSlidesCollection.length) {
-            idSlide = 0;
-            showOfferSlide(idSlide);
-        } else {
-            showOfferSlide(idSlide);
-        }
-    });
-    buttonOfferPrev.addEventListener('click', () => {
-        idSlide --;
-        if (idSlide < 0) {
-            idSlide = offerSlidesCollection.length - 1;
-            showOfferSlide(idSlide);
-        } else {
-            showOfferSlide(idSlide);
-        }
-    });
+    // function showOfferSlide (i) {
+    //     offerSlidesCollection[i].classList.add('show', 'fadeIn');
+    //     offerSlidesCollection[i].classList.remove('hide');
+    //     hideOfferSlides(i);
+    // }
+    // buttonOfferNext.addEventListener('click', () => {
+    //     idSlide ++;
+    //     if (idSlide == offerSlidesCollection.length) {
+    //         idSlide = 0;
+    //         showOfferSlide(idSlide);
+    //     } else {
+    //         showOfferSlide(idSlide);
+    //     }
+    // });
+    // buttonOfferPrev.addEventListener('click', () => {
+    //     idSlide --;
+    //     if (idSlide < 0) {
+    //         idSlide = offerSlidesCollection.length - 1;
+    //         showOfferSlide(idSlide);
+    //     } else {
+    //         showOfferSlide(idSlide);
+    //     }
+    // });
+
+    //Создание усложненного слайдера блока offer
+    
 });
