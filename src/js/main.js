@@ -335,7 +335,11 @@ window.addEventListener('DOMContentLoaded', () => {
     })();
     
     function hideOfferSlides (i = 0) {
-        offerCurrentSlide.textContent = `0${idSlide + 1}`;
+        if (i > 8) {
+            offerCurrentSlide.textContent = `${i + 1}`;
+        } else {
+            offerCurrentSlide.textContent = `0${i + 1}`;
+        }
         offerSlidesCollection.forEach((item, j) => {
             if (j !== i) {
                 item.classList.add('hide');
@@ -344,6 +348,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
     hideOfferSlides();
+
     function showOfferSlide (i) {
         offerSlidesCollection[i].classList.add('show', 'fadeIn');
         offerSlidesCollection[i].classList.remove('hide');
