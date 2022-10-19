@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function hideTabContent() {
         tabsContent.forEach(item => {
             item.classList.add('hide');
-            item.classList.remove('show', 'fade');
+            item.classList.remove('show', 'fadeIn');
         });
 
         tabs.forEach(item => {
@@ -317,7 +317,54 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
 
-    // fetch('http://localhost:3000/menu')
-    //     .then(data => data.json())
-    //     .then(res => console.log(res));
+    //Создание слайдера для блока Offer
+    const buttonOfferPrev = document.querySelector('.offer__slider-prev'),
+          buttonOfferNext = document.querySelector('.offer__slider-next'),
+          offerSlidesCollection = document.querySelectorAll('.offer__slide'),
+        //   offerImgsCollection = document.querySelectorAll('.offer__slide img'),
+          offerCurrentSlide = document.getElementById('current'),
+          offerTotalSlide = document.getElementById('total');
+    let idSlide = 0;
+
+    (() => {
+        if (offerSlidesCollection.length > 10) {
+            offerTotalSlide.textContent = `${offerSlidesCollection.length}`;
+        } else {
+            offerTotalSlide.textContent = `0${offerSlidesCollection.length}`;
+        }
+    })();
+    
+    function hideOfferSlides (i = 0) {
+        offerCurrentSlide.textContent = `0${idSlide + 1}`;
+        offerSlidesCollection.forEach((item, j) => {
+            if (j !== i) {
+                item.classList.add('hide');
+                item.classList.remove('show', 'fadeIn');
+            }
+        });
+    }
+    hideOfferSlides();
+    function showOfferSlide (i) {
+        offerSlidesCollection[i].classList.add('show', 'fadeIn');
+        offerSlidesCollection[i].classList.remove('hide');
+        hideOfferSlides(i);
+    }
+    buttonOfferNext.addEventListener('click', () => {
+        idSlide ++;
+        if (idSlide == offerSlidesCollection.length) {
+            idSlide = 0;
+            showOfferSlide(idSlide);
+        } else {
+            showOfferSlide(idSlide);
+        }
+    });
+    buttonOfferPrev.addEventListener('click', () => {
+        idSlide --;
+        if (idSlide < 0) {
+            idSlide = offerSlidesCollection.length - 1;
+            showOfferSlide(idSlide);
+        } else {
+            showOfferSlide(idSlide);
+        }
+    });
 });
