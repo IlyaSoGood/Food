@@ -319,21 +319,29 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Slider
         const buttonOfferPrev = document.querySelector('.offer__slider-prev'),
-          buttonOfferNext = document.querySelector('.offer__slider-next'),
-          offerSlidesCollection = document.querySelectorAll('.offer__slide'),
-          offerCurrentSlide = document.getElementById('current'),
-          offerTotalSlide = document.getElementById('total');
+                buttonOfferNext = document.querySelector('.offer__slider-next'),
+                offerSlidesCollection = document.querySelectorAll('.offer__slide'),
+                offerCurrentSlide = document.getElementById('current'),
+                offerTotalSlide = document.getElementById('total'),
+                slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+                slidesField = document.querySelector('.offer__slider-inner'),
+                widthSlide = window.getComputedStyle(slidesWrapper).width;
     let idSlide = 0;
+    let offsetSlide = 0;
+
+    (() => {
+        if (offerSlidesCollection.length > 10) {
+            offerTotalSlide.textContent = `${offerSlidesCollection.length}`;
+            //для усложненного варианта
+            offerCurrentSlide.textContent = `${idSlide + 1}`;
+        } else {
+            offerTotalSlide.textContent = `0${offerSlidesCollection.length}`;
+            //для усложненного варианта
+            offerCurrentSlide.textContent = `0${idSlide + 1}`;
+        }
+    })();
 
     //Создание простого слайдера для блока Offer
-    // (() => {
-    //     if (offerSlidesCollection.length > 10) {
-    //         offerTotalSlide.textContent = `${offerSlidesCollection.length}`;
-    //     } else {
-    //         offerTotalSlide.textContent = `0${offerSlidesCollection.length}`;
-    //     }
-    // })();
-    
     // function hideOfferSlides (i = 0) {
     //     if (i > 8) {
     //         offerCurrentSlide.textContent = `${i + 1}`;
@@ -374,5 +382,53 @@ window.addEventListener('DOMContentLoaded', () => {
     // });
 
     //Создание усложненного слайдера блока offer
-    
+    slidesField.style.width = 100 * offerSlidesCollection.length + '%';
+    slidesField.style.display = 'flex';
+    slidesField.style.transition = '0.5s all';
+    slidesWrapper.style.overflow = 'hidden';
+
+    offerSlidesCollection.forEach(slide => {
+        slide.style.width = widthSlide;
+    });
+
+    buttonOfferNext.addEventListener('click', () => {
+        if (offsetSlide == +widthSlide.slice(0, widthSlide.length - 2) * (offerSlidesCollection.length - 1)) {
+            offsetSlide = 0;
+        } else {
+            offsetSlide += +widthSlide.slice(0, widthSlide.length - 2);
+        }
+        slidesField.style.transform = `translateX(-${offsetSlide}px)`;
+        
+        if (idSlide == offerSlidesCollection.length - 1) {
+            idSlide = 0;
+        } else {
+            idSlide++;
+        }
+
+        if(offerSlidesCollection.length < 10) {
+            offerCurrentSlide.textContent = `0${idSlide + 1}`;
+        } else {
+            offerCurrentSlide.textContent = `${idSlide + 1}`;
+        }
+    });
+    buttonOfferPrev.addEventListener('click', () => {
+        if (offsetSlide == 0) {
+            offsetSlide = +widthSlide.slice(0, widthSlide.length - 2) * (offerSlidesCollection.length - 1);
+        } else {
+            offsetSlide -= +widthSlide.slice(0, widthSlide.length - 2);
+        }
+        slidesField.style.transform = `translateX(-${offsetSlide}px)`;
+
+        if (idSlide == 0) {
+            idSlide = offerSlidesCollection.length - 1;
+        } else {
+            idSlide--;
+        }
+
+        if(offerSlidesCollection.length < 10) {
+            offerCurrentSlide.textContent = `0${idSlide + 1}`;
+        } else {
+            offerCurrentSlide.textContent = `${idSlide + 1}`;
+        }
+    });
 });
