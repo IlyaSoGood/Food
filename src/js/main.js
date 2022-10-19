@@ -320,6 +320,7 @@ window.addEventListener('DOMContentLoaded', () => {
     //Slider
         const buttonOfferPrev = document.querySelector('.offer__slider-prev'),
                 buttonOfferNext = document.querySelector('.offer__slider-next'),
+                offerSlider = document.querySelector('.offer__slider'),
                 offerSlidesCollection = document.querySelectorAll('.offer__slide'),
                 offerCurrentSlide = document.getElementById('current'),
                 offerTotalSlide = document.getElementById('total'),
@@ -381,6 +382,27 @@ window.addEventListener('DOMContentLoaded', () => {
     //     }
     // });
 
+    //Создание навигации для слайдера блока offer
+    offerSlider.style.position = 'relative';
+
+    const indicators = document.createElement('ol'),
+          dots = [];
+
+    indicators.classList.add('carousel-indicators');
+    offerSlider.append(indicators);
+
+    for (let i = 0; i < offerSlidesCollection.length; i++) {
+        const dot = document.createElement('li');
+        dot.classList.add('dot');
+        dot.setAttribute('data-slide-to', i + 1);
+        indicators.append(dot);
+        if (i == 0) {
+            dot.classList.add('dot_active');
+        }
+        dots.push(dot);
+    }
+
+
     //Создание усложненного слайдера блока offer
     slidesField.style.width = 100 * offerSlidesCollection.length + '%';
     slidesField.style.display = 'flex';
@@ -389,6 +411,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
     offerSlidesCollection.forEach(slide => {
         slide.style.width = widthSlide;
+    });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+
+            idSlide = slideTo - 1;
+            offsetSlide = +widthSlide.slice(0, widthSlide.length - 2) * (slideTo - 1);
+
+            slidesField.style.transform = `translateX(-${offsetSlide}px)`;
+
+            if(offerSlidesCollection.length < 10) {
+                offerCurrentSlide.textContent = `0${idSlide + 1}`;
+            } else {
+                offerCurrentSlide.textContent = `${idSlide + 1}`;
+            }
+
+            dots.forEach(dot => dot.style.opacity = '.5');
+            dots[idSlide].style.opacity = 1;
+        });
     });
 
     buttonOfferNext.addEventListener('click', () => {
@@ -410,6 +452,9 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             offerCurrentSlide.textContent = `${idSlide + 1}`;
         }
+
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[idSlide].style.opacity = 1;
     });
     buttonOfferPrev.addEventListener('click', () => {
         if (offsetSlide == 0) {
@@ -430,5 +475,7 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             offerCurrentSlide.textContent = `${idSlide + 1}`;
         }
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[idSlide].style.opacity = 1;
     });
 });
