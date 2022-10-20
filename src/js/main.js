@@ -427,13 +427,16 @@ window.addEventListener('DOMContentLoaded', () => {
     function transformField () {
         slidesField.style.transform = `translateX(-${offsetSlide}px)`;
     }
+    function transformString (str) {
+        return +str.replace(/\D/g, '');
+    }
 
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
             idSlide = slideTo - 1;
-            offsetSlide = +widthSlide.slice(0, widthSlide.length - 2) * (slideTo - 1);
+            offsetSlide = transformString(widthSlide) * (slideTo - 1);
 
             transformField();
             changeNumberSlide();
@@ -442,10 +445,10 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     buttonOfferNext.addEventListener('click', () => {
-        if (offsetSlide == +widthSlide.slice(0, widthSlide.length - 2) * (offerSlidesCollection.length - 1)) {
+        if (offsetSlide == +widthSlide.replace(/\D/g, '') * (offerSlidesCollection.length - 1)) {
             offsetSlide = 0;
         } else {
-            offsetSlide += +widthSlide.slice(0, widthSlide.length - 2);
+            offsetSlide += transformString(widthSlide) ;
         }
         transformField();
         
@@ -459,9 +462,9 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     buttonOfferPrev.addEventListener('click', () => {
         if (offsetSlide == 0) {
-            offsetSlide = +widthSlide.slice(0, widthSlide.length - 2) * (offerSlidesCollection.length - 1);
+            offsetSlide = transformString(widthSlide)  * (offerSlidesCollection.length - 1);
         } else {
-            offsetSlide -= +widthSlide.slice(0, widthSlide.length - 2);
+            offsetSlide -= transformString(widthSlide) ;
         }
         transformField();
 
