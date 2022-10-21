@@ -16,7 +16,7 @@ gulp.task("copy-html", () => {
 });
 
 gulp.task("build-js", () => {
-    return gulp.src("./src/js/main.js")
+    return gulp.src("./src/js/bundle.js")
                 // .pipe(webpack({
                 //     mode: 'development',
                 //     output: {
