@@ -1,6 +1,7 @@
+import {getResource} from '../services/services';
+
 function cards() {
     // Use class for product cards
-
     class ProductCard {
         constructor(img, alt, title, descr, price, parentSelector, ...classes) {
             this.img = img;
@@ -40,22 +41,13 @@ function cards() {
         }
     }
 
-    const getResource = async (url, data) => {
-        const res = await fetch(url);
-
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-        }
-        return await res.json();
-    };
-
     //1-ый Способ через конструктор(шаблон)
-    // getResource ('http://localhost:3000/menu')
-    //     .then(data => {
-    //         data.forEach(({img, altimg, title, descr, price}) => {
-    //             new ProductCard(img, altimg, title, descr, price, '.menu .container').render();
-    //         });
-    //     });
+    getResource ('http://localhost:3000/menu')
+        .then(data => {
+            data.forEach(({img, altimg, title, descr, price}) => {
+                new ProductCard(img, altimg, title, descr, price, '.menu .container').render();
+            });
+        });
 
     //2-ой способ создания карточек товара через функцию, но лишаемся ШАБЛОНИЗАЦИИ. Чтобы построить что-то один раз.
     // getResource ('http://localhost:3000/menu')
@@ -83,12 +75,12 @@ function cards() {
     // }
 
     //3 Использование библиотеки Axios
-    axios.get('http://localhost:3000/menu')
-        .then(data => {
-            data.data.forEach(({img, altimg, title, descr, price}) => {
-                new ProductCard(img, altimg, title, descr, price, '.menu .container').render();
-            });
-        });
+    // axios.get('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.data.forEach(({img, altimg, title, descr, price}) => {
+    //             new ProductCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         });
+    //     });
 }
 
-module.exports = cards;
+export default cards;
